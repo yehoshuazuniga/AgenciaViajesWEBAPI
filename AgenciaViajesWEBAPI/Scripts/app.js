@@ -47,11 +47,45 @@ function editarRegistro(id) {
         }
     })
 }
+
+function CrearRegistro() {
+    $("#lista").css("display", "none");
+    $('#editado').css("display", "");
+
+}
+
+function CrearDestino() {
+    var ciudad = $('#editCiudad').val();
+    var pais = $('#editPais').val();
+
+    var destino = {
+        Ciudad: ciudad,
+        Pais: pais
+    };
+
+    $.ajax({
+        url: "/api/Destinos" ,
+        type: "POST",
+        data: JSON.stringify(destino),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (request) {
+            if (request == 200) {
+                getData();
+            }
+
+        }
+    })
+}
+
 function Guardar() {
     var id = $('#editDestinoID').val();
-
+    if (id == "" || id == undefined || id == null) {
+        CrearDestino();
+        return;
+    }
     var ciudad = $('#editCiudad').val();
-    var pais = $('#editAlumnoApellido').val();
+    var pais = $('#editPais').val();
 
     var destino = {
         DestinoID: id,
