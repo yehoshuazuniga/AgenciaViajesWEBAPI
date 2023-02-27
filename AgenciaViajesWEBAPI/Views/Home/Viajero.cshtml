@@ -1,1 +1,35 @@
-﻿<h2>holaaaaaaaa</h2>
+﻿<div class="row">
+    <div class="col-10" id="lista">
+        <h4>Viajeros</h4>
+        <button id="CraarRegstro" class="btn-default" onclick="CrearRegistro()">Crear Viajero</button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Telefono</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-10" id="editado" style="display:none">
+        <h4>Editar Viajero</h4>
+        <form class="form-group" id="editForm">
+            <input id="editViajeroID" type="hidden" name="ViajeroID" />
+            <p><label>DNI VIajero</label><input id="editDNI" name="dni" class="form-control" /></p>
+            <p><label>Nombre</label><input id="editNombre" name="Nombre" class="form-control" /></p>
+            <p><label>Fecha Nacimiento</label><input id="editFecha_Nacimiento" name="Fecha_Nacimiento" class="form-control" /></p>
+            <p><label>Telefono</label><input id="editTelefono" name="Telefono" class="form-control" /></p>
+            <button id="submitEdit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+        </form>
+    </div>
+</div>
+

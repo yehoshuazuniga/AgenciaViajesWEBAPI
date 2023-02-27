@@ -1,31 +1,22 @@
-﻿
-@*<div class="row">
-    <div class="col-md-6" id="lista">
-        <h4>Destinos</h4>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Ciudad</th>
-                    <th>Pais</th> 
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+
+<div class="jumbotron row">
+    <div class="row">
+        <h1 class="h1 text-center">Es hora de Viajar</h1>
+        <div class="col-lg-12">
+            <img src="~/Content/images/ima.jpg" class="img-responsive img-rounded" />
+        </div>
+        <div class="col-lg-12 text-center" style="margin-top:1.5rem">
+            <div class="navbar-collapse" style="margin-left:auto;margin-right:auto">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Destinos", "Destino", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Viajeros", "Viajero", "Home", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+
 </div>
-
-<div class="row">
-    <div class="col-md-6" id="editado">
-        <h4>Editar destino</h4>
-        <form class="form-group" id="editForm">
-            <input id="editDestinoID" type="hidden" name="DestinoID" />
-            <p><label>Ciudad</label><input id="editCiudad" name="Ciudad" class="form-control" /></p>
-            <p><label>Pais</label><input id="editPais" name="Pais" class="form-control" /></p>           
-            <button id="submitEdit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
-        </form>
-    </div>
-</div>*@
-
