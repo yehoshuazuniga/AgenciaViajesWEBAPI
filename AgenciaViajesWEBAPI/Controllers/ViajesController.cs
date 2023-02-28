@@ -20,14 +20,22 @@ namespace AgenciaViajesWEBAPI.Controllers
         // GET: api/Viajes
         public IQueryable<Viaje> GetViajes()
         {
-            return db.Viajes;
+            return db.Viajes.Include(v=>v.Viajero).Include(v=>v.Destino);
         }
 
         // GET: api/Viajes/5
         [ResponseType(typeof(Viaje))]
         public IHttpActionResult GetViaje(int id)
         {
-            Viaje viaje = db.Viajes.Find(id);
+            var viaje = db.Viajes.Where(v=>v.ViajeID==id)
+                .Select(v=> new
+                {
+                    idViaje=v.ViajeID,
+                    precio = v.Precio,
+                    fechaVuelo=v.Fecha_Viaje,
+                      viajero= v.Viajero,
+                      destino= v.Destino
+                }).ToList();
             if (viaje == null)
             {
                 return NotFound();
@@ -40,6 +48,7 @@ namespace AgenciaViajesWEBAPI.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutViaje(int id, Viaje viaje)
         {
+            DateTime le = (viaje.Fecha_Viaje);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

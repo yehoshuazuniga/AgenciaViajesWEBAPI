@@ -8,10 +8,65 @@ function tratarFecha(fecha) {
     return dat;
 }
 
-function ajaxDestinos() {
+function comboViajero() {
+    $.ajax({
+        type: "GET",
+        url: "/api/Viajeros",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $("#editNombreViajero")
+                .empty()
+                .append($("<option></option>")
+                    .val("0")
+                    .html("-Seleccione Viajero-"));
+            $.each(data, function (key, value) {
+                var option = $(document.createElement('option'));
+                option.html(value.dni + "===>" + value.Nombre);
+                //option.val(key);
+                option.val(value.ViajeroID)
+                $("#editNombreViajero").append(option);
+            });
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(textStatus + " " + XMLHttpRequest.responseText);
+        }
+    })
+
+}
+
+function comboDestino() {
     $.ajax({
         type: "GET",
         url: "/api/Destinos",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $("#editCiudadDestino")
+                .empty()
+                .append($("<option></option>")
+                    .val("0")
+                    .html("-Seleccione Destino-"));
+            $.each(data, function (key, value) {
+                var option = $(document.createElement('option'));
+                option.html(value.Ciudad + "===>" + value.Pais);
+                //option.val(key);
+                option.val(value.DestinoID)
+                $("#editCiudadDestino").append(option);
+            });
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(textStatus + " " + XMLHttpRequest.responseText);
+        }
+    })
+}
+
+function ajaxDestinos() {
+    $.ajax({
+        type: "GET",
+        url: "../../api/Destinos",
         success: function (data) {
             $('#tableBody').empty();
             for (var i = 0; i < data.length; i++) {
@@ -49,6 +104,8 @@ function ajaxViajeros() {
 }
 
 function ajaxViaje() {
+    comboViajero();
+    comboDestino();
     $.ajax({
         type: "GET",
         url: "/api/Viajes",
@@ -58,17 +115,18 @@ function ajaxViaje() {
                 $('#tableBody').append('<tr><td>' + data[i].ViajeID
                     + '</td><td>' + data[i].Precio
                     + '</td><td>' + tratarFecha(data[i].Fecha_Viaje)
-                    + '</td><td>' + data[i].ViajeroID
-                    + '</td><td>' + data[i].DestinoID
+                    + '</td><td>' + data[i].Viajero.Nombre
+                    + '</td><td>' + data[i].Viajero.dni
+                    + '</td><td>' + data[i].Destino.Ciudad
                     + '</td><td><input type="button" id="btnEditar" value="Edit" onclick="editarRegistro(' + data[i].ViajeID + ')"/>'
                     + '</td><td><input type="button" id="btnBorrar" value="Delete" onclick="borrarRegistro(' + data[i].ViajeID + ')"/>'
                     + '</td></tr>');
 
             }
+           
         }
     })
 }
-
 
 function getData() {
 
@@ -84,7 +142,7 @@ function getData() {
             ajaxDestinos()
             break;
         case "Viaje":
-            ajaxViaje()
+            ajaxViaje();
             break;
         default:
     }
@@ -108,10 +166,21 @@ function borrarRegistro(id) {
                 }
             })
             break;
+
         case "Destino":
             $.ajax({
                 type: "DELETE",
                 url: "/api/Destinos/" + id,
+                success: function () {
+                    getData();
+                }
+            })
+            break;
+
+        case "Viaje":
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Viajes/" + id,
                 success: function () {
                     getData();
                 }
@@ -152,6 +221,22 @@ function editarViajero(id) {
     })
 }
 
+function editarViaje(id) {
+    $("#lista").css("display", "none");
+    $.ajax({
+        type: "GET",
+        url: "/api/Viajes/" + id,
+        success: function (data) {
+            $('#editViajeID').val(data[0].idViaje);
+            $('#editPrecio').val(data[0].precio);
+            $('#editFecha_Viaje').val(tratarFecha(data[0].fechaVuelo));
+            $('#editNombreViajero').val(data[0].viajero.ViajeroID)
+            $('#editCiudadDestino').val(data[0].destino.DestinoID);
+            $('#editado').css("display", "");
+        }
+    })
+}
+
 function editarRegistro(id) {
 
     switch (urlDirec) {
@@ -160,6 +245,9 @@ function editarRegistro(id) {
             break;
         case "Viajero":
             editarViajero(id) 
+            break;
+        case "Viaje":
+            editarViaje(id)
             break;
         default:
     }
@@ -295,6 +383,76 @@ function GuardarViajero() {
 
 }
 
+function CrearViaje(){
+    var precio = $('#editPrecio').val();
+    var fecha = $('#editFecha_Viaje').val().toString();
+    var viajero = $('#editNombreViajero').val();
+    var destino = $('#editCiudadDestino').val();
+
+    var viaje = {
+        Precio: precio,
+        Fecha_Viaje: fecha,
+        ViajeroID: viajero,
+        DestinoID: destino
+    };
+
+    $.ajax({
+        url: "/api/Viajes",
+        type: "POST",
+        data: JSON.stringify(viaje),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (request) {
+            if (request == 200) {
+                getData();
+            }
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(textStatus + " " + XMLHttpRequest.responseText);
+        }
+    })
+}
+
+function GuardarViaje() {
+
+    var id = $('#editViajeID').val();
+    if (id == "" || id == undefined || id == null) {
+        CrearViaje();
+        return;
+    }
+
+    var precio = $('#editPrecio').val();
+    var fecha = $('#editFecha_Viaje').val();
+    var viajero = $('#editNombreViajero').val();
+    var destino = $('#editCiudadDestino').val();
+
+    var viaje = {
+        ViajeID: id,
+        Precio: precio,
+        Fecha_Viaje: fecha,
+        ViajeroID: viajero,
+        DestinoID: destino
+    };
+
+    $.ajax({
+        url: "/api/Viajes/" + id,
+        type: "PUT",
+        data: JSON.stringify(viaje),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (request) {
+            if (request == 200) {
+                getData();
+            }
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(textStatus + " " + XMLHttpRequest.responseText);
+        }
+    })
+
+}
 
 function Guardar() {
 
@@ -304,6 +462,9 @@ function Guardar() {
             break;
         case "Viajero":
             GuardarViajero()
+            break;
+        case "Viaje":
+            GuardarViaje()
             break;
         default:
     }

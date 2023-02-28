@@ -15,7 +15,7 @@ namespace AgenciaViajesWEBAPI.Models
         [Display(Name = "Fecha del Viaje")]
         [DataType(DataType.Date)]
         //[ValidateDay(ErrorMessage = "Solo debes introducir fechas posteriores al dia de hoy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+       // [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha_Viaje { get; set; }
         [Display(Name = "DNI Viajero")]
         //[ValidateAge]

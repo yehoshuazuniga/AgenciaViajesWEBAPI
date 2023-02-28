@@ -1,15 +1,16 @@
 ﻿<div class="row">
     <div class="col-10" id="lista">
         <h4>Viajes</h4>
-        <button id="CraarRegstro" class="btn-default" onclick="CrearRegistro()">Crear Destino</button>
+        <button id="CraarRegstro" class="btn-default" onclick="CrearRegistro()">Crear Viaje</button>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Precio</th>
-                    <th>Fecha_Viaje</th>
-                    <th>ViajeroID</th>
-                    <th>DestinoID</th>
+                    <th>Fecha Viaje</th>
+                    <th>Nombre Viajero</th>
+                    <th>DNI Viajero</th>
+                    <th>Ciudad</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -21,13 +22,24 @@
 
 <div class="row">
     <div class="col-10" id="editado" style="display:none">
-        <h4>Editar destino</h4>
+        <h4>Editar / Registrar Viaje</h4>
         <form class="form-group" id="editForm">
-            <input id="editDestinoID" type="hidden" name="DestinoID" />
-            <p><label>Ciudad</label><input id="editCiudad" name="Ciudad" class="form-control" /></p>
-            <p><label>Pais</label><input id="editPais" name="Pais" class="form-control" /></p>
+            <input id="editViajeID" type="hidden" name="ViajeID" />
+            <p><label>Precio</label><input id="editPrecio" name="Precio" class="form-control" /></p>
+            <p><label>Fecha Nacimiento</label><input id="editFecha_Viaje" name="Fecha_Viaje" class="form-control" /></p>
+            <p>
+                <label>Nombre Viajero</label>
+                <select id="editNombreViajero" name="Nombre" class="form-control"></select>
+            </p>
+            <p>
+                <label>Destino</label>
+                <select id="editCiudadDestino" name="Ciudad" class="form-control"></select>
+            </p>
             <button id="submitEdit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
         </form>
     </div>
 </div>
 
+@*<input id="editNombreViajero" name="Nombre" class="form-control" />*@
+
+@* <input id="editCiudadDestino" name="Ciudad" class="form-control" /> *@
