@@ -29,5 +29,12 @@ namespace AgenciaViajesWEBAPI.Controllers
             return View();
         }
 
+        public ActionResult Viaje()
+        {
+            ViewBag.title = "Viajes";
+
+            return View();
+        }
+
     }
 }

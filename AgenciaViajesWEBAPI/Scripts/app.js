@@ -48,6 +48,27 @@ function ajaxViajeros() {
     })
 }
 
+function ajaxViaje() {
+    $.ajax({
+        type: "GET",
+        url: "/api/Viajes",
+        success: function (data) {
+            $('#tableBody').empty();
+            for (var i = 0; i < data.length; i++) {
+                $('#tableBody').append('<tr><td>' + data[i].ViajeID
+                    + '</td><td>' + data[i].Precio
+                    + '</td><td>' + tratarFecha(data[i].Fecha_Viaje)
+                    + '</td><td>' + data[i].ViajeroID
+                    + '</td><td>' + data[i].DestinoID
+                    + '</td><td><input type="button" id="btnEditar" value="Edit" onclick="editarRegistro(' + data[i].ViajeID + ')"/>'
+                    + '</td><td><input type="button" id="btnBorrar" value="Delete" onclick="borrarRegistro(' + data[i].ViajeID + ')"/>'
+                    + '</td></tr>');
+
+            }
+        }
+    })
+}
+
 
 function getData() {
 
@@ -61,6 +82,9 @@ function getData() {
             break;
         case "Destino":
             ajaxDestinos()
+            break;
+        case "Viaje":
+            ajaxViaje()
             break;
         default:
     }

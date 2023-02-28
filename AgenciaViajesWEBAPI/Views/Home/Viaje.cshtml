@@ -1,0 +1,33 @@
+﻿<div class="row">
+    <div class="col-10" id="lista">
+        <h4>Viajes</h4>
+        <button id="CraarRegstro" class="btn-default" onclick="CrearRegistro()">Crear Destino</button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Precio</th>
+                    <th>Fecha_Viaje</th>
+                    <th>ViajeroID</th>
+                    <th>DestinoID</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-10" id="editado" style="display:none">
+        <h4>Editar destino</h4>
+        <form class="form-group" id="editForm">
+            <input id="editDestinoID" type="hidden" name="DestinoID" />
+            <p><label>Ciudad</label><input id="editCiudad" name="Ciudad" class="form-control" /></p>
+            <p><label>Pais</label><input id="editPais" name="Pais" class="form-control" /></p>
+            <button id="submitEdit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+        </form>
+    </div>
+</div>
+

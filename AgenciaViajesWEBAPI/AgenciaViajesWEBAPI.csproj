@@ -166,6 +166,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\ViajerosController.cs" />
+    <Compile Include="Controllers\ViajesController.cs" />
     <Compile Include="DbContext\Context.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -231,6 +232,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Destino.cshtml" />
     <Content Include="Views\Home\Viajero.cshtml" />
+    <Content Include="Views\Home\Viaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
