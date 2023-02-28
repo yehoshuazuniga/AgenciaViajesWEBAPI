@@ -73,8 +73,8 @@ function ajaxDestinos() {
                 $('#tableBody').append('<tr><td>' + data[i].DestinoID
                     + '</td><td>' + data[i].Ciudad
                     + '</td><td>' + data[i].Pais
-                    + '</td><td><input type="button" id="btnEditar" value="Edit" onclick="editarRegistro(' + data[i].DestinoID + ')"/>'
-                    + '</td><td><input type="button" id="btnBorrar" value="Delete" onclick="borrarRegistro(' + data[i].DestinoID + ')"/>'
+                    + '</td><td><input type="button" id="btnEditar" value="Edit" class="btn btn-success" onclick="editarRegistro(' + data[i].DestinoID + ')"/>'
+                    + '</td><td><input type="button" id="btnBorrar" value="Delete" class="btn btn-danger" onclick="borrarRegistro(' + data[i].DestinoID + ')"/>'
                     + '</td></tr>');
 
             }
@@ -94,8 +94,8 @@ function ajaxViajeros() {
                     + '</td><td>' + data[i].Nombre
                     + '</td><td>' + tratarFecha(data[i].Fecha_Nacimiento)
                     + '</td><td>' + data[i].Telefono
-                    + '</td><td><input type="button" id="btnEditar" value="Edit" onclick="editarRegistro(' + data[i].ViajeroID + ')"/>'
-                    + '</td><td><input type="button" id="btnBorrar" value="Delete" onclick="borrarRegistro(' + data[i].ViajeroID + ')"/>'
+                    + '</td><td><input type="button" id="btnEditar" value="Edit" class="btn btn-success" onclick="editarRegistro(' + data[i].ViajeroID + ')"/>'
+                    + '</td><td><input type="button" id="btnBorrar" value="Delete" class="btn btn-danger" onclick="borrarRegistro(' + data[i].ViajeroID + ')"/>'
                     + '</td></tr>');
 
             }
@@ -118,8 +118,8 @@ function ajaxViaje() {
                     + '</td><td>' + data[i].Viajero.Nombre
                     + '</td><td>' + data[i].Viajero.dni
                     + '</td><td>' + data[i].Destino.Ciudad
-                    + '</td><td><input type="button" id="btnEditar" value="Edit" onclick="editarRegistro(' + data[i].ViajeID + ')"/>'
-                    + '</td><td><input type="button" id="btnBorrar" value="Delete" onclick="borrarRegistro(' + data[i].ViajeID + ')"/>'
+                    + '</td><td><input type="button" id="btnEditar" class="btn btn-success" value="Edit" onclick="editarRegistro(' + data[i].ViajeID + ')"/>'
+                    + '</td><td><input type="button" id="btnBorrar" class="btn btn-danger" value="Delete" onclick="borrarRegistro(' + data[i].ViajeID + ')"/>'
                     + '</td></tr>');
 
             }
@@ -227,11 +227,11 @@ function editarViaje(id) {
         type: "GET",
         url: "/api/Viajes/" + id,
         success: function (data) {
-            $('#editViajeID').val(data[0].idViaje);
-            $('#editPrecio').val(data[0].precio);
-            $('#editFecha_Viaje').val(tratarFecha(data[0].fechaVuelo));
-            $('#editNombreViajero').val(data[0].viajero.ViajeroID)
-            $('#editCiudadDestino').val(data[0].destino.DestinoID);
+            $('#editViajeID').val(data.ViajeID);
+            $('#editPrecio').val(data.Precio);
+            $('#editFecha_Viaje').val(tratarFecha(data.Fecha_Viaje));
+            $('#editNombreViajero').val(data.ViajeroID)
+            $('#editCiudadDestino').val(data.DestinoID);
             $('#editado').css("display", "");
         }
     })
@@ -448,7 +448,7 @@ function GuardarViaje() {
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(textStatus + " " + XMLHttpRequest.responseText);
+            alert(textStatus + "=>" + XMLHttpRequest.responseText);
         }
     })
 

@@ -27,15 +27,20 @@ namespace AgenciaViajesWEBAPI.Controllers
         [ResponseType(typeof(Viaje))]
         public IHttpActionResult GetViaje(int id)
         {
-            var viaje = db.Viajes.Where(v=>v.ViajeID==id)
-                .Select(v=> new
+            var aux = db.Viajes.Where(v=>v.ViajeID==id)
+                .Select(v=> new 
                 {
-                    idViaje=v.ViajeID,
-                    precio = v.Precio,
-                    fechaVuelo=v.Fecha_Viaje,
-                      viajero= v.Viajero,
-                      destino= v.Destino
-                }).ToList();
+                    ViajeID=v.ViajeID,
+                    Precio = v.Precio,
+                    Fecha_Viaje=v.Fecha_Viaje,                    
+                    Viajero= v.Viajero,
+                    Destino= v.Destino,
+                    DestinoID=v.DestinoID,
+                    ViajeroID=v.ViajeroID
+
+                }).SingleOrDefault();
+            Viaje viaje = db.Viajes.Find(id);
+
             if (viaje == null)
             {
                 return NotFound();
@@ -48,7 +53,6 @@ namespace AgenciaViajesWEBAPI.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutViaje(int id, Viaje viaje)
         {
-            DateTime le = (viaje.Fecha_Viaje);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
